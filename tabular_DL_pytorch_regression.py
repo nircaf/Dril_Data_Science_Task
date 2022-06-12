@@ -44,10 +44,10 @@ def tabular_DL_torch(target, features,use_best_hyperparameters = True,BI_Data=Tr
                      'scheduler_fn':torch.optim.lr_scheduler.ReduceLROnPlateau,
                      'verbose':0,
                      }
-    kf = KFold(n_splits=2, random_state=42, shuffle=True)
+    kf = KFold(n_splits=5, random_state=42, shuffle=True)
     train, x_test, target, y_test = train_test_split(train, target, test_size=0.20)
     CV_score_array = []
-    max_epochs = 200
+    max_epochs = 1000
     with alive_bar(kf.n_splits, force_tty=True) as bar:
         for train_index, test_index in kf.split(train):
             x_train, x_valid = train[train_index], train[test_index]
