@@ -5,7 +5,6 @@ import datetime
 from datetime import timedelta, timezone
 from meteostat import Point, Daily
 from geopy.geocoders import Nominatim
-from pyowm import OWM
 import matplotlib.pyplot as plt
 from alive_progress import alive_bar
 

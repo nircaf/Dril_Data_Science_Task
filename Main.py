@@ -30,9 +30,11 @@ def CV_Run():
 
 def BI_Run():
     print('BI all data')
-    # all_data, all_labels = ReadFiles_BI.Get_all_data(csv_files)  # Run all data. if one run [csv_files[0]]
-    all_data = ReadFiles_BI.load_all_data('saved_data/all_data.csv')  # Load data
-    all_labels = ReadFiles_BI.load_all_data('saved_data/all_labels.csv').iloc[:, 1]  # Load data
+    if use_saved_data:
+        all_data = ReadFiles_BI.load_all_data('saved_data/all_data.csv')  # Load data
+        all_labels = ReadFiles_BI.load_all_data('saved_data/all_labels.csv').iloc[:, 1]  # Load data
+    else:
+        all_data, all_labels = ReadFiles_BI.Get_all_data(csv_files)  # Run all data. if one run [csv_files[0]]
     all_data_ranked = Kmeans_CV.excels_to_num(all_data)  # factorize data
 
     # model_sklearn.model_run(all_data_ranked,all_labels)
@@ -45,10 +47,12 @@ def BI_Run():
 def Combined_Run():
     # combined BI CV
     split_to_dates = ReadFiles_CV.get_precent_engagement_w_location_to_dates()  # Read CV files and get metric
-    # all_data, all_labels = ReadFiles_BI.Get_all_Rishon(csv_files, savefile=True) # Get data from excel
 
-    all_data = ReadFiles_BI.load_all_data('saved_data/all_data_Rishon.csv')  # Load data
-    all_labels = ReadFiles_BI.load_all_data('saved_data/all_labels_Rishon.csv').iloc[:, 1]  # Load data
+    if use_saved_data:
+        all_data = ReadFiles_BI.load_all_data('saved_data/all_data_Rishon.csv')  # Load data
+        all_labels = ReadFiles_BI.load_all_data('saved_data/all_labels_Rishon.csv').iloc[:, 1]  # Load data
+    else:
+        all_data, all_labels = ReadFiles_BI.Get_all_Rishon(csv_files, savefile=True) # Get data from excel
 
     all_data,all_labels = merge_BI_CV(all_data, split_to_dates,all_labels)
     all_data.reset_index(drop=True, inplace=True)
@@ -64,7 +68,8 @@ def Combined_Run():
 if __name__ == '__main__':
     tic = time.time()
     tuning = False
+    use_saved_data = True
     # CV_Run()
-    # BI_Run()
+    BI_Run()
     Combined_Run()
     print("Runtime {0}".format(time.time() - tic))
