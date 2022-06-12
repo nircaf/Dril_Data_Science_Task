@@ -1,21 +1,21 @@
 import json
-import random
 import numpy as np
 import pandas as pd
 from sklearn import preprocessing
 import warnings
 import datetime
 
-with open('CV/actions_tuna.json') as f:
+with open('CV/actions_tuna.json') as f: # Get CV Data
     data = json.load(f)
+# Categorize actions
 encoding_dictionary = {'hold_product': 1, 'pick_up': 2, 'put_back': 6, 'put_to_cart': 3, 'touch_product': 4,
                        'stop_at_category': 5, 'stand': 7, 'walk': 8}
+
 score_threshold = 2 / encoding_dictionary.__len__()
 put_to_cart = 'put_to_cart'
 
 
-def get_precent_engagement_w_location_to_dates():
-    split_to_dates = []
+def get_precent_engagement_w_location_to_dates(): # Return engagement metric with dates
     engagement_percent_mean_loc = []
     for index, id_costumer in enumerate(data):
         actions_above_thresh = [d['name'] for d in id_costumer["actions"] if d['score'] > score_threshold]
@@ -42,10 +42,10 @@ def get_precent_engagement_w_location_to_dates():
                                                        , 'gender': 1 if id_costumer['gender'] == 'male' else 0,
                                                     })
     return pd.DataFrame(engagement_percent_mean_loc).groupby(
-        'date').mean()  # pd.DataFrame(split_to_dates).groupby('date')
+        'date').mean()
 
 
-def get_precent_engagement_w_location():
+def get_precent_engagement_w_location():  # Return engagement metric
     engagement_percent_mean_loc = []
     for index, id_costumer in enumerate(data):
         actions_above_thresh = [d['name'] for d in id_costumer["actions"] if d['score'] > score_threshold]
@@ -74,7 +74,7 @@ def get_precent_engagement_w_location():
     return engagement_percent_mean_loc
 
 
-def actions_process_binary():
+def actions_process_binary():  # Return engagement metric binary
     engagement_with_product = []
     for index, id_costumer in enumerate(data):
         actions_above_thresh = [d['name'] for d in id_costumer["actions"] if d['score'] > score_threshold]
@@ -98,7 +98,7 @@ def actions_process_binary():
     return engagement_counter
 
 
-def actions_process_multiclass():
+def actions_process_multiclass():  # Return engagement metric multiclass
     all_lines = []
     for index, id_costumer in enumerate(data):
         actions_above_thresh = [d['name'] for d in id_costumer["actions"] if d['score'] > score_threshold]

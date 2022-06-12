@@ -1,20 +1,13 @@
 import pandas as pd
 import numpy as np
-import os
 import datetime
-from datetime import timedelta, timezone
 from meteostat import Point, Daily
 from geopy.geocoders import Nominatim
-import matplotlib.pyplot as plt
 from alive_progress import alive_bar
 
 # geopy
 # Initialize Nominatim API
 geolocator = Nominatim(user_agent="MyApp")
-
-# pyowm
-# APIKEY='e4e45be818511bb26b589eb18f27f94a'                  #your API Key here as string
-# owm = OWM(APIKEY)                   # Use API key to get data
 
 # Const-parameters
 trends_country = 'IL'

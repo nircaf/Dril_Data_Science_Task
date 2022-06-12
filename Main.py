@@ -1,4 +1,3 @@
-import pandas as pd
 import ReadFiles_BI
 import numpy as np
 import tabular_DL_pytorch_regression
@@ -8,7 +7,6 @@ from os import listdir
 from os.path import isfile, join
 import time
 import tabular_DL_pytorch_regression_tuning
-import model_sklearn
 
 # get dir excels
 mypath = 'BI'  # location of BI files
@@ -69,7 +67,7 @@ if __name__ == '__main__':
     tic = time.time()
     tuning = False
     use_saved_data = True
-    # CV_Run()
+    CV_Run()
     BI_Run()
     Combined_Run()
     print("Runtime {0}".format(time.time() - tic))

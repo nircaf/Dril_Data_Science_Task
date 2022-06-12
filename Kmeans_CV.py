@@ -1,4 +1,3 @@
-from sklearn.cluster import KMeans
 from sklearn_extra.cluster import KMedoids
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -7,7 +6,7 @@ import numpy as np
 from sklearn.metrics import pairwise_distances_argmin
 import pandas as pd
 from matplotlib import pyplot
-from sklearn.decomposition import PCA
+import time
 
 def normalize(data):
     result = data.copy()
@@ -74,6 +73,6 @@ def kmeans_run(engagement_percent_mean_loc):
     ax.set_xlabel(col_names[0])
     ax.set_ylabel(col_names[1])
     ax.set_zlabel(col_names[2])
-    # fig.savefig("Figures/kmeans_run.png", dpi=300)
-    # time.sleep(3) # Wait to finish save
+    fig.savefig("Figures/kmeans_run.png", dpi=300)
+    time.sleep(3) # Wait to finish save
     pyplot.close(fig)

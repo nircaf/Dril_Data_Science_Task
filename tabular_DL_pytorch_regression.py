@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 import torch
 from sklearn.model_selection import KFold
 from pytorch_tabnet.tab_model import TabNetRegressor
@@ -9,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from scipy import stats
 from alive_progress import alive_bar
 
-def load_best_results(BI_Data):
+def load_best_results(BI_Data): # Load config to tabnet
     with open('saved_data/best_result_df.json' if BI_Data else 'saved_data/best_result_df_combined.json') as f:
         return json.load(f)
 
@@ -44,10 +43,10 @@ def tabular_DL_torch(target, features,use_best_hyperparameters = True,BI_Data=Tr
                      'scheduler_fn':torch.optim.lr_scheduler.ReduceLROnPlateau,
                      'verbose':0,
                      }
-    kf = KFold(n_splits=5, random_state=42, shuffle=True)
+    kf = KFold(n_splits=5, random_state=42, shuffle=True) # increase n_splits to incrase accuracy and timerun
     train, x_test, target, y_test = train_test_split(train, target, test_size=0.20)
     CV_score_array = []
-    max_epochs = 1000
+    max_epochs = 1000 # Increase epoch number to incrase accuracy and timerun
     with alive_bar(kf.n_splits, force_tty=True) as bar:
         for train_index, test_index in kf.split(train):
             x_train, x_valid = train[train_index], train[test_index]
@@ -60,6 +59,7 @@ def tabular_DL_torch(target, features,use_best_hyperparameters = True,BI_Data=Tr
             CV_score_array.append(clf.best_cost)
             bar()
     print("The CV score is %.5f" % np.mean(CV_score_array, axis=0))
+
     # plot losses
     plt.plot(clf.history['val_0_rmse'][5:], label='validation rmse')
     plt.xlabel('Epochs')

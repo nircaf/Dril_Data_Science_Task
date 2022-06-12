@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import torch
@@ -6,11 +5,8 @@ from sklearn.model_selection import KFold
 from pytorch_tabnet.tab_model import TabNetRegressor
 import ray
 from ray import tune
-from ray.tune.schedulers import AsyncHyperBandScheduler
-
 
 # tensorboard --logdir logs/fit
-
 
 def tabular_DL_torch(all_labels, all_data, BI_Data=True):
     train = all_data.copy()
